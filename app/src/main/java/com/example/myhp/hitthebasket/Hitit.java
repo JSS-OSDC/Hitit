@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -87,10 +89,11 @@ public class Hitit extends Activity implements View.OnTouchListener{
 
     class MyBringBackSurface extends SurfaceView implements Runnable{
         SurfaceHolder ourHolder;
+        SoundPool sound;
         Canvas canvas;
         Thread ourThread=null;
         int d=0,k=0;
-        int l,m;
+        int l,m,ep;
         float f,g;
         String s;
         Paint p;
@@ -102,6 +105,8 @@ public class Hitit extends Activity implements View.OnTouchListener{
             p.setTextSize(50);
             p.setARGB(100, 0, 0, 0);
             p.setTypeface(Typeface.SERIF);
+            sound=new SoundPool(5, AudioManager.STREAM_MUSIC,0);
+            ep=sound.load(Hitit.this,R.raw.explosion,1);
             ourThread=new Thread(this);
             ourThread.start();
 
@@ -110,14 +115,15 @@ public class Hitit extends Activity implements View.OnTouchListener{
         public void  randomize(){
 
                 double db = Math.random();
-                f = (float) (db * ((6*canvas.getWidth())/7);
+                f = (float) (db * ((6*canvas.getWidth())/7));
                 db=Math.random();
             m=(int)(db*(1.99));
             if(m==0)
                 g=0;
             if(m==1)
                 g=canvas.getHeight()-plus.getHeight();
-                d=1;
+
+            d=1;
             l=0;
 
         }
@@ -139,7 +145,7 @@ if(d==0)
 
 
               if(x!=0&&y!=0){
-                 canvas.drawBitmap(test,x/*-(test.getWidth()/2)*/,y-(test.getHeight()/2),null);
+                 canvas.drawBitmap(test,x-(test.getWidth()/2),y-(test.getHeight()/2),null);
                 }
                 if(sX!=0&sY!=0){
                     //      canvas.drawBitmap(plus,sX-(plus.getWidth()/2),sY-(plus.getHeight()/2),null);
@@ -167,10 +173,11 @@ if(d==0)
             u=plus.getWidth();
             v=plus.getHeight();
 
-           if((z>=f-u/2&&z<=f+u)&&(w>=0&&w<=v)&&l!=1){
+           if((z>=f-u/2&&z<=f+u)&&(w>=g&&w<=g+v)&&(l!=1)){
                d=0;
                k++;
                l=1;
+                sound.play(ep,1,1,0,0,1);
                //canvas.drawBitmap(hit, canvas.getWidth() / 2, canvas.getHeight() / 2, null);
 
 
