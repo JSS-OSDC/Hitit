@@ -90,8 +90,8 @@ public class Hitit extends Activity implements View.OnTouchListener{
         Canvas canvas;
         Thread ourThread=null;
         int d=0,k=0;
-        int l;
-        float f;
+        int l,m;
+        float f,g;
         String s;
         Paint p;
         boolean isRunning=false;
@@ -110,7 +110,13 @@ public class Hitit extends Activity implements View.OnTouchListener{
         public void  randomize(){
 
                 double db = Math.random();
-                f = (float) (db * (canvas.getWidth())-250);
+                f = (float) (db * ((6*canvas.getWidth())/7);
+                db=Math.random();
+            m=(int)(db*(1.99));
+            if(m==0)
+                g=0;
+            if(m==1)
+                g=canvas.getHeight()-plus.getHeight();
                 d=1;
             l=0;
 
@@ -127,8 +133,9 @@ public class Hitit extends Activity implements View.OnTouchListener{
 
 if(d==0)
     randomize();
+
                     //canvas=ourHolder.lockCanvas();
-                    canvas.drawBitmap(plus,f,0,null);
+                    canvas.drawBitmap(plus,f,g,null);
 
 
               if(x!=0&&y!=0){
@@ -147,7 +154,7 @@ if(d==0)
                 aniY=aniY+scaledY;
 
                 s="Score: "+k;
-                canvas.drawText(s,canvas.getWidth()/4,canvas.getHeight()/2,p);
+                canvas.drawText(s,canvas.getWidth()/7,canvas.getHeight()/2,p);
                 ourHolder.unlockCanvasAndPost(canvas);
 
             }
