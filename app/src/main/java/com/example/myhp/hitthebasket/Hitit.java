@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -87,12 +89,19 @@ public class Hitit extends Activity implements View.OnTouchListener{
         SurfaceHolder ourHolder;
         Canvas canvas;
         Thread ourThread=null;
-        int d=0;
+        int d=0,k=0;
+        int l;
         float f;
+        String s;
+        Paint p;
         boolean isRunning=false;
         public MyBringBackSurface(Context context) {
             super(context);
             ourHolder=getHolder();
+         p=new Paint();
+            p.setTextSize(50);
+            p.setARGB(100, 0, 0, 0);
+            p.setTypeface(Typeface.SERIF);
             ourThread=new Thread(this);
             ourThread.start();
 
@@ -101,12 +110,14 @@ public class Hitit extends Activity implements View.OnTouchListener{
         public void  randomize(){
 
                 double db = Math.random();
-                f = (float) (db * (canvas.getWidth()-200));
+                f = (float) (db * (canvas.getWidth())-250);
                 d=1;
+            l=0;
 
         }
         @Override
         public void run() {
+
             while(isRunning)
             {
                 if(!ourHolder.getSurface().isValid())
@@ -121,7 +132,7 @@ if(d==0)
 
 
               if(x!=0&&y!=0){
-                 canvas.drawBitmap(test,x-(test.getWidth()/2),y-(test.getHeight()/2),null);
+                 canvas.drawBitmap(test,x/*-(test.getWidth()/2)*/,y-(test.getHeight()/2),null);
                 }
                 if(sX!=0&sY!=0){
                     //      canvas.drawBitmap(plus,sX-(plus.getWidth()/2),sY-(plus.getHeight()/2),null);
@@ -130,10 +141,13 @@ if(d==0)
                     canvas.drawBitmap(test,fX-(test.getWidth()/2)-aniX,fY-(test.getHeight()/2)-aniY,null);
                     //      canvas.drawBitmap(plus,fX-(plus.getWidth()/2),fY-(plus.getHeight()/2),null);
                }
+
                 check();
                 aniX=aniX+scaledX;
                 aniY=aniY+scaledY;
 
+                s="Score: "+k;
+                canvas.drawText(s,canvas.getWidth()/4,canvas.getHeight()/2,p);
                 ourHolder.unlockCanvasAndPost(canvas);
 
             }
@@ -146,8 +160,10 @@ if(d==0)
             u=plus.getWidth();
             v=plus.getHeight();
 
-           if((z>=f-u/2&&z<=f+u/2)&&(w>=0&&w<=v)){
+           if((z>=f-u/2&&z<=f+u)&&(w>=0&&w<=v)&&l!=1){
                d=0;
+               k++;
+               l=1;
                //canvas.drawBitmap(hit, canvas.getWidth() / 2, canvas.getHeight() / 2, null);
 
 
