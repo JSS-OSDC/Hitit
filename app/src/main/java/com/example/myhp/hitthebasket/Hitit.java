@@ -139,10 +139,14 @@ if(d==0)
         }
 
         public void check(){
-            float z,w;
+            float z,w,u,v;
             z=fX-(test.getWidth()/2)-aniX;
             w=fY-(test.getHeight()/2)-aniY;
-          //                                  if(==||==)
+            u=plus.getWidth();
+            v=plus.getHeight();
+
+           if((z>=f&&z<=f+u)&&(w>=0&&w<=v))
+               d=0;
         }
 
         public void pause(){
