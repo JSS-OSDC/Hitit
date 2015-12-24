@@ -18,7 +18,7 @@ public class Hitit extends Activity implements View.OnTouchListener{
     MyBringBackSurface ourSurfaceView;
     float x,y,sX,sY,fX,fY,dX,dY,aniX,aniY,scaledX,scaledY;
 
-    Bitmap test,plus;
+    Bitmap test,plus,hit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,7 @@ public class Hitit extends Activity implements View.OnTouchListener{
         scaledY=0;
         test= BitmapFactory.decodeResource(getResources(),R.drawable.greenball);
         plus= BitmapFactory.decodeResource(getResources(),R.drawable.icon);
+        hit=BitmapFactory.decodeResource(getResources(),R.drawable.hit);
         setContentView(ourSurfaceView);
 
 
@@ -145,8 +146,15 @@ if(d==0)
             u=plus.getWidth();
             v=plus.getHeight();
 
-           if((z>=f&&z<=f+u)&&(w>=0&&w<=v))
+           if((z>=f-u/2&&z<=f+u/2)&&(w>=0&&w<=v)){
                d=0;
+               //canvas.drawBitmap(hit, canvas.getWidth() / 2, canvas.getHeight() / 2, null);
+
+
+           }
+
+
+
         }
 
         public void pause(){
