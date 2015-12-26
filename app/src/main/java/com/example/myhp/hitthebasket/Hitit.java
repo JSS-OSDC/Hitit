@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -22,7 +24,7 @@ public class Hitit extends Activity implements View.OnTouchListener{
     MyBringBackSurface ourSurfaceView;
     float x,y,sX,sY,fX,fY,dX,dY,aniX,aniY,scaledX,scaledY;
 
-    Bitmap test,plus,hit;
+    Bitmap test,plus,pluse,plusd,hit,image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +41,11 @@ public class Hitit extends Activity implements View.OnTouchListener{
         aniY=0;
         scaledX=0;
         scaledY=0;
-        test= BitmapFactory.decodeResource(getResources(),R.drawable.greenball);
-        plus= BitmapFactory.decodeResource(getResources(),R.drawable.icon);
+        test= BitmapFactory.decodeResource(getResources(),R.drawable.greenballz);
+        plusd=BitmapFactory.decodeResource(getResources(),R.drawable.stepd);
+        pluse= BitmapFactory.decodeResource(getResources(),R.drawable.step);
         hit=BitmapFactory.decodeResource(getResources(),R.drawable.hit);
+        image=BitmapFactory.decodeResource(getResources(),R.drawable.images);
         setContentView(ourSurfaceView);
 
 
@@ -107,8 +111,13 @@ public class Hitit extends Activity implements View.OnTouchListener{
             p.setTypeface(Typeface.SERIF);
             sound=new SoundPool(5, AudioManager.STREAM_MUSIC,0);
             ep=sound.load(Hitit.this,R.raw.explosion,1);
+
             ourThread=new Thread(this);
             ourThread.start();
+
+
+
+
 
         }
 
@@ -119,14 +128,21 @@ public class Hitit extends Activity implements View.OnTouchListener{
                 db=Math.random();
             m=(int)(db*(1.99));
             if(m==0)
-                g=0;
+            { g=0;
+            plus=plusd;
+            }
             if(m==1)
+            {plus=pluse;
                 g=canvas.getHeight()-plus.getHeight();
+
+            }
 
             d=1;
             l=0;
 
         }
+
+
         @Override
         public void run() {
 
@@ -135,7 +151,8 @@ public class Hitit extends Activity implements View.OnTouchListener{
                 if(!ourHolder.getSurface().isValid())
                     continue;
                 canvas=ourHolder.lockCanvas();
-                canvas.drawRGB(2, 2, 150);
+
+                canvas.drawBitmap(image,null,new RectF(0,0,canvas.getWidth(),canvas.getHeight()),null);
 
 if(d==0)
     randomize();
@@ -161,6 +178,7 @@ if(d==0)
 
                 s="Score: "+k;
                 canvas.drawText(s,canvas.getWidth()/7,canvas.getHeight()/2,p);
+
                 ourHolder.unlockCanvasAndPost(canvas);
 
             }
@@ -177,8 +195,10 @@ if(d==0)
                d=0;
                k++;
                l=1;
-                sound.play(ep,1,1,0,0,1);
-               //canvas.drawBitmap(hit, canvas.getWidth() / 2, canvas.getHeight() / 2, null);
+                sound.play(ep, 1, 1, 0, 0, 1);
+              // canvas.drawBitmap(hit,z ,w , null);
+
+
 
 
            }
